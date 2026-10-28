@@ -1,16 +1,19 @@
+import { Suspense } from 'react';
 import {
   QueryClient,
   HydrationBoundary,
   dehydrate,
 } from '@tanstack/react-query';
+
 import NoteDetailsClient from './NoteDetails.client';
 import { fetchNoteById } from '@/lib/api';
+import Loader from '@/components/UI/Loader/Loader';
 
 interface NoteDetailsProps {
   params: Promise<{ id: string }>;
 }
 
-const NoteDetails = async ({ params }: NoteDetailsProps) => {
+async function NoteDetailsContent({ params }: NoteDetailsProps) {
   const { id } = await params;
   const queryClient = new QueryClient();
 
@@ -24,6 +27,12 @@ const NoteDetails = async ({ params }: NoteDetailsProps) => {
       <NoteDetailsClient />
     </HydrationBoundary>
   );
-};
+}
 
-export default NoteDetails;
+export default function NoteDetails({ params }: NoteDetailsProps) {
+  return (
+    <Suspense fallback={<Loader />}>
+      <NoteDetailsContent params={params} />
+    </Suspense>
+  );
+}
