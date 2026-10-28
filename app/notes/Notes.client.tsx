@@ -6,8 +6,8 @@ import toast from 'react-hot-toast';
 import { useFetchNotes } from '@/hooks/useFetchNotes';
 import { useDebouncedCallback } from 'use-debounce';
 import NoteForm from '@/components/NoteForm/NoteForm';
-import Modal from '@/components/UI/Modal/Modal';
-import Pagination from '@/components/UI/Pagination/Pagination';
+import Modal from '@/components/Modal/Modal';
+import Pagination from '@/components/Pagination/Pagination';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Loader from '@/components/UI/Loader/Loader';
 
