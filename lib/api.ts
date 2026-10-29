@@ -1,5 +1,11 @@
 import { Note, CreateNote, NoteTag } from '@/types/note';
-import $host from './index';
+import axios from 'axios';
+
+const API_KEY = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN as string;
+const BASE_URL = process.env.NEXT_PUBLIC_NOTEHUB_BASE_URL as string;
+
+axios.defaults.baseURL = BASE_URL;
+axios.defaults.headers.common['Authorization'] = `Bearer ${API_KEY}`;
 
 interface NoteSearchResponse {
   notes: Note[];
@@ -11,7 +17,7 @@ export async function fetchNotes(
   page: number = 1,
   tag?: NoteTag
 ): Promise<NoteSearchResponse> {
-  const { data } = await $host.get<NoteSearchResponse>('api/notes', {
+  const { data } = await axios.get<NoteSearchResponse>('api/notes', {
     params: {
       ...(search && { search }),
       ...(tag && { tag }),
@@ -24,16 +30,16 @@ export async function fetchNotes(
 }
 
 export async function fetchNoteById(id: string): Promise<Note> {
-  const { data } = await $host.get<Note>('api/notes/' + id);
+  const { data } = await axios.get<Note>('api/notes/' + id);
   return data;
 }
 
 export async function createNote(note: CreateNote): Promise<Note> {
-  const { data } = await $host.post<Note>('api/notes', note);
+  const { data } = await axios.post<Note>('api/notes', note);
   return data;
 }
 
 export async function deleteNote(id: string): Promise<Note> {
-  const { data } = await $host.delete<Note>('api/notes/' + id);
+  const { data } = await axios.delete<Note>('api/notes/' + id);
   return data;
 }

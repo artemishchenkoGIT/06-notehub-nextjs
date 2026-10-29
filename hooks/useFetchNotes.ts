@@ -7,5 +7,6 @@ export const useFetchNotes = (query: string, page: number, tag?: NoteTag) => {
     queryKey: ['notes', query, page],
     queryFn: () => fetchNotes(query, page, tag),
     placeholderData: keepPreviousData,
+    refetchOnMount: false,
   });
 };

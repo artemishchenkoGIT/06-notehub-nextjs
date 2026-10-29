@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import {
   QueryClient,
   HydrationBoundary,
@@ -7,13 +6,12 @@ import {
 
 import NoteDetailsClient from './NoteDetails.client';
 import { fetchNoteById } from '@/lib/api';
-import Loader from '@/components/UI/Loader/Loader';
 
 interface NoteDetailsProps {
   params: Promise<{ id: string }>;
 }
 
-async function NoteDetailsContent({ params }: NoteDetailsProps) {
+const NoteDetailsContent = async ({ params }: NoteDetailsProps) => {
   const { id } = await params;
   const queryClient = new QueryClient();
 
@@ -27,12 +25,6 @@ async function NoteDetailsContent({ params }: NoteDetailsProps) {
       <NoteDetailsClient />
     </HydrationBoundary>
   );
-}
+};
 
-export default function NoteDetails({ params }: NoteDetailsProps) {
-  return (
-    <Suspense fallback={<Loader />}>
-      <NoteDetailsContent params={params} />
-    </Suspense>
-  );
-}
+export default NoteDetailsContent;
