@@ -1,18 +1,10 @@
 import css from './Footer.module.css';
 
-async function getCurrentYear() {
-  'use cache';
-
-  return new Date().getFullYear();
-}
-
-async function Footer() {
-  const currentYear = await getCurrentYear();
-
+function Footer() {
   return (
     <footer className={css.footer}>
       <div className={css.content}>
-        <p>© {currentYear} NoteHub. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} NoteHub. All rights reserved.</p>
         <div className={css.wrap}>
           <p>Developer: your name</p>
 
